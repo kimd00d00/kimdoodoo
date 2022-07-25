@@ -12,9 +12,11 @@
 </head>
 <body>
 	사번 : ${e.getEno() }<br>
-	-> 자바: <%=((Employee)request.getAttribute("e")).getEno() %>
+	-> 자바: <%=((Employee)request.getAttribute("e")).getEno() %><br>
 	이름 : ${e.getName() }<br>
-	부서 : ${e.getDept() }
+	-> 자바: <%=((Employee)request.getAttribute("e")).getName() %><br>
+	부서 : ${e.getDept() }<br>
+	-> 자바: <%=((Employee)request.getAttribute("e")).getDept() %><br>
 	<h3>약식</h3>
 	사번 : ${e.eno } <br>
 	이름 : ${e.name } <br>

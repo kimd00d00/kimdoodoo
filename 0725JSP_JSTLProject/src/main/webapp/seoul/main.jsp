@@ -28,12 +28,16 @@
  let natureLink =()=>{
 	 location.href = "nature.jsp";
  }
+ let foodLink =()=>{
+	 location.href = "../food/category.jsp";
+ }
 </script>
 <body>
 	<div class="container">
 		<div class="row">
 			<input type=button id="locBtn" value="명소" class="btn-lg btn-success" onclick="locationLink()">
 			<input type=button id="natBtn" value="자연" class="btn-lg btn-info" onclick="natureLink()">
+			<input type=button id="foodBtn" value="맛집" class="btn-lg btn-danger" onclick="foodLink()">
 		</div>
 	</div>
 </body>
