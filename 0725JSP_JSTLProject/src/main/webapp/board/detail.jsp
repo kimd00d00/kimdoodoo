@@ -36,6 +36,30 @@ $(function() {
                     i = 0;
                 }
             })
+            $('#delBtn').on("click",function(){
+            	let pwd = $('#pwd').val(); //#pwd의 값을 읽어옴
+            	if(pwd.trim()==""){
+            		$('#pwd').focus();
+            		return;
+            	}
+            	let no=$('#pwd').attr("data-no");
+            	
+            	$.ajax({
+            		type: 'post', //전송방식 
+            		url: 'delete.jsp', //누구한테 보낼거냐
+            		data: {"no":no, "pwd":pwd}, //뭘 보낼거냐(자동으로 delete.jsp?no=1&pwd=1234 로 변경해서 넘어갈것)
+            		success: function(result){//결과를 받아옴
+            			let res = result.trim();
+            			if(res=="yes"){
+            				location.href="list.jsp";
+            			}else{
+            				alert("비밀번호가 틀립니다.");
+            				$('#pwd').val("");
+            				$('#pwd').focus();
+            			}
+            		} 
+            	})
+            })
         })
 </script>
 </head>
@@ -81,7 +105,8 @@ $(function() {
 				</tr>
 				<tr id="delTr" style="display:none"> <%-- 삭제버튼 누르면 나오게 할거임 --%>
 					<td colspan="4" class="text-right">
-						비밀번호:<input type="password" name="pwd" id="pwd" size="15" class="input-sm">
+					<%-- HTML 태그는 사용자 정의가 불가능하지만 속성은 사용자 정의가 가능하다. --%>
+						비밀번호:<input type="password" name="pwd" id="pwd" data-no="${vo.no }" size="15" class="input-sm">
 						<input type="button" id="delBtn" value="삭제" class="btn btn-sm btn-primary">
 					</td>
 				</tr>
