@@ -23,7 +23,7 @@ public class Controller extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		//xml파일의 properties에서 Path를 가져 온다.
-		String path = "C:\\webDev\\webStudy\\0727MVCProject3\\src\\main\\webapp\\WEB-INF\\app.xml"; 
+		String path = "C:\\Users\\user\\git\\sist\\0727MVCProject3\\src\\main\\webapp\\WEB-INF\\app.xml"; 
 		try {
 			//Parser 생성 : XML, WML, HTML 종류별로 Parser 생성가능
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); 
