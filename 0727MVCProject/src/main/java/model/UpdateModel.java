@@ -1,5 +1,9 @@
 package model;
 
-public class UpdateModel {
+import javax.servlet.http.HttpServletRequest;
 
+public class UpdateModel {
+	public void execute(HttpServletRequest request) {
+		request.setAttribute("msg", "게시물 수정");
+	}
 }
