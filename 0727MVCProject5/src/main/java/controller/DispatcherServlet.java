@@ -13,18 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import model.*;
 
-@WebServlet("*.do") //내가 마음대로 둬도된다. 
+@WebServlet("*.do") 
+//내가 마음대로 둬도된다. 
 //*은 그 자리에 어떤 단어가 들어와도 이 서블릿(DispatcherServelt)을 찾아줄 수 있다는 뜻
 //list.do, find.do 등.. 다 DispatcherServelt을 찾아줄 수 있게 된다.
-//URI가 do로 끝나지 않으면 "요청된 리소스 [/0727MVCProject5/food/category.did]은(는) 가용하지 않습니다." 뜸
+//URI가 do로 끝나지 않으면 "요청된 리소스 [/0727MVCProject5/food/category.ex]은(는) 가용하지 않습니다." 뜸
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	List<String> clsList = new ArrayList<String>();
+	
 	public void init(ServletConfig config) throws ServletException {
 		clsList.add("model.FoodModel");
-		
 	}
-
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			//사용자가 요청한 URL을 읽어 온다. (맨 뒤에 .do)
@@ -33,6 +34,7 @@ public class DispatcherServlet extends HttpServlet {
 			//http://localhost:8080/0727MVCProject5/food/category.do 이 전체는 URL
 			//URI는 /0727MVCProject5/category.do 부분만.
 			//ContextPath는 0727MVCProject
+			//?no=1 이런거는 request에 담겨 오는것임. request.getRequestURI()에서 제외됨
 			System.out.println(uri); //food/category.do
 			//이 URI와 RequestMapping 이름이랑 같으면 호출하라! 고 시키는 것임
 			

@@ -13,6 +13,8 @@ public class FoodModel {
 	@RequestMapping("food/category.do")
 	public String food_category(HttpServletRequest request) {
 		String no = request.getParameter("no");
+		if(no==null)
+			no="1";
 		FoodDAO dao = new FoodDAO();
 		List<CategoryVO> list = dao.categoryListData(Integer.parseInt(no));
 		request.setAttribute("list", list);
@@ -22,6 +24,10 @@ public class FoodModel {
 	}
 	@RequestMapping("food/food_list.do")
 	public String food_list(HttpServletRequest request) {
+		String cno = request.getParameter("cno");
+		FoodDAO dao = new FoodDAO();
+		List<FoodVO> list = dao.food_list(Integer.parseInt(cno));
+		request.setAttribute("list", list);
 		System.out.println("food_list() call~");
 //		request.setAttribute("msg", "카테고리별 맛집 출력합니다.");
 		return "../food/food_list.jsp";
