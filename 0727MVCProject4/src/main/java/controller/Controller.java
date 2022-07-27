@@ -20,7 +20,7 @@ public class Controller extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			String pkg = "model";
-			String path = "C:\\webDev\\webStudy\\0727MVCProject4\\src\\main\\java";
+			String path = "C:\\Users\\user\\git\\sist\\0727MVCProject4\\src\\main\\java\\";
 			String temp = path+"\\"+pkg.replace(".", "\\"); //doodoo.prjct.model 이런걸 doodoo\\prjct\\model로 바꿔줌
 			File dir = new File(temp);
 			File[] files = dir.listFiles(); //temp에 있는 모든 파일들 가져옴
@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
 					String fp = pkg+"."+s.substring(0,s.lastIndexOf("."));//패키지 이름과 함께 클래스이름을 가져옴
 					System.out.println(fp);
 					clsList.add(fp);
-					//읽어 오는 순서가 일정하지 않아 데이터를 맞추기가 힘들다.
+					//읽어 오는 순서가 일정하지 않아 데이터를 맞추기가 힘들다. -> Map같은거 쓰셈
 				}
 			}
 		}catch(Exception ex) {}
