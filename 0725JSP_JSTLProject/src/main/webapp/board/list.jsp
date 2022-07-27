@@ -67,7 +67,7 @@
 								</c:if>
 								<%-- 삭제한 글은 들어갈 수 없도록 --%>
 								<c:if test="${vo.subject==msg }">
-									<span style="color:gray">${vo.subject} }</span>
+									<span style="color:gray">${vo.subject}</span>
 								</c:if>
 								<c:if test="${vo.subject!=msg }">
 									<a href="detail.jsp?no=${vo.no }">${vo.subject }</a>

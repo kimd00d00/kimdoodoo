@@ -26,7 +26,7 @@ public class BoardModel {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("count", count);
 		request.setAttribute("list", list);
-		request.setAttribute("msg", "관리자가 삭제한 글입니다.");
+		request.setAttribute("msg", "관리자가 삭제한 게시물입니다");
 		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		request.setAttribute("today", today);
 	}

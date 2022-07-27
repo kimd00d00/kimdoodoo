@@ -5,4 +5,3 @@
 <%
 	model.boardDelete(request);
 %>
-${res}
