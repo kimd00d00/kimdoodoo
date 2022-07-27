@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="model.*"%>
-<%
-	UpdateModel model = new UpdateModel();
-	model.execute(request);
-%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
