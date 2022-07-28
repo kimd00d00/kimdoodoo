@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 
+Connection 관련 내용이 저장되는 곳
+getConnection()과 disConnection()이 만들어짐
+ -->
+<configuration>
+	<!-- 얘 밑에 올 수 있는 tag들
+	(properties?, settings?, typeAliases?, typeHandlers?, objectFactory?, 
+	 objectWrapperFactory?, reflectorFactory?, plugins?, environments?, databaseIdProvider?, mappers?)
+	 properties = 데이터베이스 정보를 저장한다! .properties라는 파일을 읽는다.
+	 typeAliases = VO를 등록한다. 어떤 VO에서 값을 가져올 것인지 선택한다.
+	 
+	 
+	 ? : 필요시에 사용하되 한 번만 사용이 가능하다.
+	 * : 0번 이상 여러 번 사용이 가능
+	 + : 반드시 한 번 이상 사용해야 한다.
+	 | : 선택
+	 default : 반드시 한 번만 사용해야 한다.
+	 -->
+	 <typeAliases>
+	 	<!-- 
+	 		 (typeAlias*, package*) VO 등록
+	 		 SQL문장 제작 = 실행부터 결과값을 받는 일까지 MyBatis에서 처리를 다 한다.
+	 	-->
+	 	<typeAlias type="doodoo.dao.MyBoardVO" alias="MyBoardVO"/> <!-- SELECT문이 나가면 여기에 값을 채워 주세요 -->
+	 </typeAliases>
+	 <!-- 연결 설정 (getConnection, disConnection)-->
+	 <environments default=""> <!--  (environment+) -->
+	 	<environment id=""> <!-- (transactionManager, dataSource) -->
+	 		<transactionManager type="JDBC"/> <!-- AutoCommit 사용하겠다는 뜻 -->
+	 		<dataSource type="POOLED">
+	 			<!-- 
+	 				POOLED : DBCP
+	 				UNPOOLED : JDBC
+	 			 -->
+	 			 <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+	 			 <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+	 			 <property name="username" value="hr"/>
+	 			 <property name="password" value="happy"/>
+	 		</dataSource>
+	 	</environment>
+	 </environments>
+	 <mappers>
+	 <!-- (mapper*, package*) -->
+	 	<mapper resource="doodoo/dao/board-mapper.xml"/><!-- SQL문장 저장 위치 -->
+	 </mappers>
+</configuration>
