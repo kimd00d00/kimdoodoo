@@ -1,7 +1,6 @@
 package controller;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 
 import javax.servlet.RequestDispatcher;
@@ -62,9 +61,9 @@ public class DispatcherServlet extends HttpServlet {
 				pkgList.add(value); 
 			}
 			for(String s:pkgList) {
-				System.out.println(s); //패키지명이 출력됨
+//				System.out.println(s); //패키지명이 출력됨
 				path = path.substring(0,path.lastIndexOf(File.separator));
-				System.out.println(path);
+//				System.out.println(path);
 				//C:\webDev\webStudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\0727SpringMVCProject
 				String ss = path+File.separator+"WEB-INF"+File.separator+"classes"+File.separator+s.replace(".", File.separator);
 				File dir = new File(ss);
@@ -73,7 +72,8 @@ public class DispatcherServlet extends HttpServlet {
 //					System.out.println(f.getName());
 					String sss = s + "." + f.getName().substring(0,f.getName().lastIndexOf("."));
 					//model.ListModel.class에서 .class를 떼려구
-					System.out.println(sss);
+//					System.out.println(sss);
+					clsList.add(sss);
 				}
 			}
 			

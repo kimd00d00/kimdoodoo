@@ -49,7 +49,10 @@ $(function() {
             		url: 'delete.jsp', //누구한테 보낼거냐
             		data: {"no":no, "pwd":pwd}, //뭘 보낼거냐(자동으로 delete.jsp?no=1&pwd=1234 로 변경해서 넘어갈것)
             		success: function(result){//결과를 받아옴
+            			console.log(result);
             			let res = result.trim();
+            			console.log(res);
+            			console.log(result, res, res == 'yes');
             			if(res=="yes"){
             				location.href="list.jsp";
             			}else{

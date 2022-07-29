@@ -366,6 +366,7 @@ public class ReplyBoardDAO {
 			   }catch(Exception ex){}
 			   disConnection();
 		   }
+		   System.out.println(result);
 		   return result;
 	   }
 //	public String boardDelete(int no, String pwd) {
