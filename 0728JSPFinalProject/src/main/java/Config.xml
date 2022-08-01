@@ -6,6 +6,8 @@
 	<typeAliases>
 		<typeAlias type="com.sist.vo.FoodCategoryVO" alias="FoodCategoryVO"/>
 		<typeAlias type="com.sist.vo.FoodVO" alias="FoodVO"/>
+		<typeAlias type="com.sist.vo.SeoulLNSVO" alias="SeoulLNSVO"/>
+		<typeAlias type="com.sist.vo.SeoulHGVO" alias="SeoulHGVO"/>
 	</typeAliases>
 	<environments default="development"> <!-- 개발환경 만들기 -->
 		<environment id="development">
@@ -20,5 +22,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/sist/mapper/food-mapper.xml"/>
+		<mapper resource="com/sist/mapper/seoul-mapper.xml"/>
 	</mappers>
 </configuration>
