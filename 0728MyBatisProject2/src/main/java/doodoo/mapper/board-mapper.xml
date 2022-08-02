@@ -34,7 +34,4 @@ ResultType=리턴형, parameerType=매개변수
 	hit = hit+1
 	<include refid="where-no"/>
 </update>
-<select id = "boardDetailData" resultType="BoardVO">
-	
-</select>
 </mapper>
