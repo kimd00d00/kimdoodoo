@@ -23,6 +23,7 @@
       </ul>
     </div>
     <div class="one_quarter">
+    <h1>${msg }</h1>
       <h6 class="title">Quick Links</h6>
       <ul class="nospace linklist">
         <li><a href="#">Home Page</a></li>

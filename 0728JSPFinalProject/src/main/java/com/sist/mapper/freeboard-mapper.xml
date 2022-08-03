@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.freeboard-mapper">
+  <!-- 목록: 페이징 select -->
+  <!-- findAll() -->
+  <select id="boardListData" resultType="FreeBoardVO" parameterType="hashmap">
+    SELECT no, subject, name, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, hit, rcount, num
+    FROM (SELECT no, subject, name, regdate, hit, rcount, rownum as num
+    FROM (SELECT /*+ INDEX_DESC(project_freeboard pf_no_pk)*/ no, subject, name, regdate, hit, rcount
+    FROM project_freeboard))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="boardTotalPage" resultType="int">
+  	SELECT CEIL(COUNT(*)/10.0) FROM project_freeboard
+  </select>
+  <!-- 등록: 시퀀스 selectKey(없어짐) insert -->
+  <insert id="boardInsert" parameterType="FreeBoardVO">
+    INSERT INTO project_freeboard(no, name, subject, content, pwd )
+    VALUES ((SELECT NVL(MAX(no)+1,1) FROM project_freeboard), 
+     #{name}, #{subject}, #{content}, #{pwd}
+     )
+  </insert>
+  <!-- boardDetail -->
+  <update id="hitIncrement" parameterType="int">
+  	UPDATE project_freeboard SET
+  	hit = hit+1
+  	WHERE no = #{no}
+  </update>
+  <select id="boardDetailData" resultType="FreeBoardVO" parameterType="int">
+  	SELECT no, name, subject, content, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, hit
+  	FROM project_freeboard
+  	WHERE no = #{no}
+  </select>
+  <!-- 수정 update, 삭제(댓글) delete / findByPwd(String pwd) -->
+  <select id="boardGetPwd" resultType="String" parameterType="int">
+  	SELECT pwd FROM project_freeboard
+  	WHERE no=#{no}
+  </select>
+  <!-- save(FreeBoardVO vo) -->
+  <update id="boardUpdate" parameterType="FreeBoardVO">
+  	UPDATE project_freeboard SET
+  	name=#{name}, subject=#{subject}, content=#{content}
+  	WHERE no=#{no}
+  </update>
+  <!--  delete(int no) -->
+  <delete id="boardDelete" parameterType="int">
+    DELETE FROM project_freeboard
+    WHERE no=#{no}
+  </delete>
+  
+  <!-- 동적 쿼리, JOIN, subQuery -->
+</mapper>

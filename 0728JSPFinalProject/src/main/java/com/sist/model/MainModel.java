@@ -17,6 +17,7 @@ public class MainModel {
 		List<FoodCategoryVO> list = FoodDAO.foodCategoryData();
 		request.setAttribute("list", list);
 		request.setAttribute("main_jsp", "../main/home.jsp");
+		request.setAttribute("msg", "footer에 출력");
 		return "../main/main.jsp";
 	}
 }
