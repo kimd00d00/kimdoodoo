@@ -109,8 +109,8 @@ public class FreeBoardDAO {
 		try {
 			session = ssf.openSession();
 			String db_pwd = session.selectOne("boardGetPwd",no);
-			System.out.println(db_pwd);
-			System.out.println(pwd);
+			System.out.println("원래 비밀번호:"+db_pwd);
+			System.out.println("입력한 비밀번호:"+pwd);
 			if(db_pwd.equals(pwd)) {
 				result="yes";
 			}else {
@@ -122,6 +122,7 @@ public class FreeBoardDAO {
 			if(session!=null)
 				session.close();
 		}
+		System.out.println("result:"+result);
 		return result;
 	}
 	
@@ -138,5 +139,28 @@ public class FreeBoardDAO {
 			if(session!=null)
 				session.close();
 		}
+	}
+	
+	public static String boardDelete(int no, String pwd) {
+		String result="";
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			String db_pwd = session.selectOne("boardGetPwd",no);
+			if(db_pwd.equals(pwd)) {
+				result="yes";
+				session.delete("boardDelete",no);
+				session.commit();
+			}else {
+				result="no";
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println("FreeBoardDAO: boardDelete() ERROR");
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return result;
 	}
 }

@@ -8,9 +8,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400" rel="stylesheet">
+<style type="text/css">
+@font-face {
+    font-family: 'NeoDunggeunmo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+</style>
 </head>
-<body id="top" style="font-family:'Nanum Gothic'">
+<body id="top" style="font-family:'NeoDunggeunmo'">
   <jsp:include page="header.jsp"></jsp:include>
   <%-- <jsp:include page="home.jsp"></jsp:include> --%>
    <jsp:include page="${main_jsp }"></jsp:include> 

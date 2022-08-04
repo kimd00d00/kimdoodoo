@@ -11,6 +11,7 @@
 		<typeAlias type="com.sist.vo.RecipeVO" alias="RecipeVO"/>
 		<typeAlias type="com.sist.vo.ChefVO" alias="ChefVO"/>
 		<typeAlias type="com.sist.vo.FreeBoardVO" alias="FreeBoardVO"/>
+		<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO"/>
 	</typeAliases>
 	<environments default="development"> <!-- 개발환경 만들기 -->
 		<environment id="development">
@@ -28,5 +29,6 @@
 		<mapper resource="com/sist/mapper/seoul-mapper.xml"/>
 		<mapper resource="com/sist/mapper/recipe-mapper.xml"/>
 		<mapper resource="com/sist/mapper/freeboard-mapper.xml"/>
+		<mapper resource="com/sist/mapper/member-mapper.xml"/>
 	</mappers>
 </configuration>

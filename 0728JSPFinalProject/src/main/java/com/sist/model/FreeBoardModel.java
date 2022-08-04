@@ -115,4 +115,14 @@ public class FreeBoardModel {
 		
 		return "redirect:../freeboard/detail.do?no="+no; //보내고 나서 request 에 있는 내용 지우기
 	}
+	
+	@RequestMapping("freeboard/delete.do")
+	public String freeboard_delete(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no"); 
+		String pwd = request.getParameter("pwd");
+		String result = FreeBoardDAO.boardDelete(Integer.parseInt(no), pwd);
+		request.setAttribute("res", result);
+		return "../freeboard/delete.jsp";
+	}
+	
 }
