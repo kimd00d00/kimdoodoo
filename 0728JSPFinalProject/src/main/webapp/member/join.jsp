@@ -70,7 +70,7 @@ $(function(){
 		}
 		$.ajax({
 			type:'post',
-			url:'../member/',
+			url:'../member/tel_check.do',
 			data:{"tel":"010-"+tel},
 			success:function(result){
 				console.log(result);
@@ -85,6 +85,10 @@ $(function(){
 				}
 			}
 		})
+	})
+	$('#joinBtn').click(function(){
+		//체크는 끝났다는 가정 하에 진행
+		$('#join_frm').submit();
 	})
 })
 </script>

@@ -15,8 +15,31 @@
     font-weight: normal;
     font-style: normal;
 }
-
 </style>
+<link rel="stylesheet" href="../member/shadow/css/shadowbox.css">
+<script type="text/javascript" src="../member/shadow/js/shadowbox.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+
+<script type="text/javascript">
+Shadowbox.init({
+	players:['iframe']
+})
+$(function(){
+	$('.images').css("cursor","pointer")
+	$('#logImg').click(function(){
+		Shadowbox.open({
+			content:'../member/login.do',
+			player:'iframe',
+			title:'Login',
+			width:480,
+			height:260
+		})
+	})
+	$('#logoutImg').click(function(){
+		location.href="../member/logout.do";
+	})
+})
+</script>
 </head>
 <body id="top" style="font-family:'NeoDunggeunmo'">
   <jsp:include page="header.jsp"></jsp:include>

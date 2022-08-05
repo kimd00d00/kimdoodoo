@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.reply-mapper">
+	<!-- 댓글수 업데이트 -->
+	<update id="countIncrement" parameterType="ReplyVO">
+		UPDATE ${table_name} SET 
+		rcount = rcount+1
+		WHERE no=#{bno}
+	</update>
+	<!-- 목록 -->
+	<select id="replyListData" resultType="ReplyVO" parameterType="ReplyVO">
+		SELECT /*+ INDEX_DESC(pr_no_pk)*/no, bno, type, id, name, msg, TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') as dbday
+		FROM project_reply
+		WHERE bno=#{bno} AND type=#{type}
+	</select>
+	<!-- 추가 -->
+	<insert id="replyInsert" parameterType="ReplyVO">
+		<!-- sequence , BEFORE는 인서트문 이전에 실시한다는 뜻-->
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM project_reply 
+		</selectKey>
+		INSERT INTO project_reply VALUES(#{no},#{bno},#{type},#{id},#{name},#{msg},SYSDATE)
+	</insert>
+	<!-- 수정 -->
+	<update id="replyUpdate" parameterType="ReplyVO">
+		UPDATE project_reply SET
+		msg = #{msg}
+		WHERE no = #{no}
+	</update>
+	<!-- 삭제 -->
+	<delete id="replyDelete" parameterType="int">
+		DELETE FROM project_reply WHERE no=#{no}
+	</delete>
+</mapper>
