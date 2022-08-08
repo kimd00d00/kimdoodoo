@@ -83,4 +83,34 @@ public class FoodDAO {
 		}
 		return vo;
 	}
+	
+	public static List<FoodVO> foodLocationFindData(Map map){
+		List<FoodVO> list = null;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("foodLocationFindData",map);
+		}catch(Exception ex) {
+			
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
+	
+	public static int foodLocationFindTotalPage(String address) {
+		int total = 0;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			total = session.selectOne("foodLocationFindTotalPage",address);
+		}catch(Exception ex) {
+			
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return total;
+	}
 }

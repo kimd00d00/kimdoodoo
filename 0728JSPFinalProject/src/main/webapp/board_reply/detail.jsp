@@ -123,7 +123,7 @@ $(function(){
 <!-- ################################################################################################ --> 
 <div class="wrapper row3">
   <main class="container clear">
-  	<h2 class="sectiontitle">내용보기</h2> 
+  	<h2 class="sectiontitle">글쓰기</h2> 
      <div class="two_third first">
      	<table class="table">
      		<tr>
