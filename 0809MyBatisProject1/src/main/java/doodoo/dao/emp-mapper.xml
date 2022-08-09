@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="doodoo.mapper.emp-mapper">
+	<resultMap type="doodoo.dao.EmpVO" id="empMap">
+		<!-- resultMap???  -->
+		<!-- property = setter를 찾아 주고 column의 값을 넣어준다. -->
+		<!-- vo.getDvo().setDname(rs.getString("dname")) -->
+		<result property="dvo.dname" column="dname"/> <!-- dvo의 dname을 잡아 준다. -->
+		<!-- vo.getDvo().setLoc(rs.getString("loc")) -->
+		<result property="dvo.loc" column="loc"/>
+	</resultMap>
+	<!-- 반복적인 SQL문장이 있을 때 주로 사용한다. (JOIN ,SUBQUERY 등...) -->
+	<sql id="join-sql">
+		SELECT empno, ename, job, hiredate, sal, emp.deptno, dname, loc
+		FROM emp, dept
+		WHERE emp.deptno = dept.deptno
+	</sql>
+	
+	<select id="empDeptJoinData" resultMap="empMap">
+		<include refid="join-sql"/>
+	</select>
+	
+	<select id="empDeptDetailData" resultMap="empMap" parameterType="int">
+		<include refid="join-sql"/>
+		AND empno=#{empno}
+	</select>
+	
+	<select id="empGetEnameData" resultType="String">
+		SELECT ename FROM emp
+	</select>
+	
+	<!-- 동적 쿼리 : 사용자가 보내는 값들이 계속 달라질 때 -->
+	<select id="empFindData" resultMap="empMap" parameterType="hashmap">
+		<include refid="join-sql"/>
+		AND ename
+		<trim prefix="IN">
+		<!-- <trim prefix="AND ename IN"> 이렇게 합쳐서 써도 됨-->
+			<foreach collection="nameArr" item="name" open="(" close=")" separator=",">#{name}</foreach>
+			<!-- String[] nameArr = {"name1","name2","name3",..}; 에서 
+			('#{name}','#{name}','#{name}',...)를 만들어 준다 -->
+			<!-- resultMap은 column명과 변수명이 다를 때 많이 사용된다. 직접 세팅해줘야 하니까... -->
+		</trim>
+	</select>
+</mapper>
