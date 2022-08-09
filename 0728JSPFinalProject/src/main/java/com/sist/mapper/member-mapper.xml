@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.member-mapper">
-	<!-- 회원 가입 -->
-	
 	<!-- 회원 가입(아이디 중복체크) 1이면 중복, 0이면 OK -->
 	<select id="memberIdCheck" resultType="int" parameterType="String">
 		SELECT COUNT(*) FROM project_member
@@ -14,9 +12,27 @@
 		WHERE email=#{email}
 	</select>
 	<!-- 회원 가입(전화번호 중복체크) -->
-	
-	<!-- 로그인 처리 -->
-	
+	<select id="memberTelCheck" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM project_member
+		WHERE tel=#{tel}
+	</select>
+	<!-- 회원 가입 -->
+	<insert id="memberInsert" parameterType="MemberVO">
+		INSERT INTO project_member(id,pwd,name,sex,birthday,email,post,addr1,addr2,tel,content) 
+		VALUES(	#{id},#{pwd},#{name},#{sex},#{birthday},#{email},#{post},#{addr1},#{addr2},#{tel},#{content} )
+	</insert>
+	<!-- 로그인 처리(ID 존재여부 확인) -->
+	<select id="memberIdCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM project_member
+		WHERE id=#{id}
+	</select>
+	<!-- 로그인 처리(비밀번호 확인) -->
+	<select id="memberInfoData" resultType="MemberVO" parameterType="String">
+		SELECT pwd, id, name, admin
+		FROM project_member
+		WHERE id=#{id}
+	</select>
 	<!-- 회원 수정 -->
 	
 	<!-- 아이디 찾기(이메일, 전화번호 이용) -->

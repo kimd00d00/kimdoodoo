@@ -10,26 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../member/shadow/css/shadowbox.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
-<script type="text/javascript" src="../member/shadow/js/shadowbox.js"></script>
-<script type="text/javascript">
-Shadowbox.init({
-	players:['iframe']
-})
-$(function(){
-	$('.images').css("cursor","pointer")
-	$('#logImg').click(function(){
-		Shadowbox.open({
-			content:'../member/login.do',
-			player:'iframe',
-			title:'Login',
-			width:450,
-			height:400
-		})
-	})
-})
-</script>
 </head>
 <body>
 <div class="wrapper row1">
@@ -71,9 +51,9 @@ $(function(){
       </li>
       <li><a class="drop" href="#">맛집</a>
         <ul>
-          <li><a href="../pages/gallery.html">지역별 맛집 찾기</a></li>
+          <li><a href="../food/food_find.do">지역별 맛집 찾기</a></li>
           <c:if test="${sessionScope.id!=null }">
-          	<li><a href="../pages/full-width.html">맛집 추천</a></li>
+          	<li><a href="../food/food_find.do">맛집 추천</a></li>
           	<li><a href="../pages/sidebar-left.html">맛집 예약</a></li>
           </c:if>
         </ul>
@@ -104,16 +84,16 @@ $(function(){
      <li><a class="drop" href="#">커뮤니티</a>
      	<ul>
      		<li><a href="../freeboard/list.do">자유게시판</a></li>
-          	<li><a href="../pages/full-width.html">묻고답하기</a></li>
+          	<li><a href="../board_reply/list.do">묻고답하기</a></li>
           	<li><a href="../pages/sidebar-left.html">공지사항</a></li>
      	</ul>
      	</li>
    	<c:if test="${sessionScope.id!=null }">
    		<c:if test="${sessionScope.admin=='n' }">
-     		<li><a href="#">마이페이지</a></li>
+     		<li><a href="../mypage/mypage.do">마이페이지</a></li>
      	</c:if>
    		<c:if test="${sessionScope.admin=='y' }">
-     		<li><a href="#">ADMIN페이지</a></li>
+     		<li><a href="../adminpage/adminpage.do">ADMIN페이지</a></li>
      	</c:if>
      </c:if>
     </ul>

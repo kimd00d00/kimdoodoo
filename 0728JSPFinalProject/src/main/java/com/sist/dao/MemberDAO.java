@@ -50,4 +50,59 @@ public class MemberDAO {
 		}
 		return count;
 	}
+	//회원가입-전화번호 중복체크
+	public static int memberTelCheck(String tel) {
+		int count = 0;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			count = session.selectOne("memberTelCheck",tel);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println("MemberDAO: memberTelCheck(String tel) ERROR");
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return count;
+	}
+	//회원가입 INSERT
+	public static void memberInsert(MemberVO vo) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true); //AutoCommit
+			session.insert("memberInsert",vo);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			System.out.println("MemberDAO: memberInsert(MemberVO vo) ERROR");
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	//
+	public static MemberVO isLogin(String id, String pwd) {
+		MemberVO vo = new MemberVO();
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			int count = session.selectOne("memberIdCount",id);
+			if(count==0) {
+				vo.setMsg("NOID");
+			}else {
+				vo = session.selectOne("memberInfoData",id);
+				if(pwd.equals(vo.getPwd())) {
+					vo.setMsg("OK");
+				}else {
+					vo.setMsg("NOPWD");
+				}
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return vo;
+	}
 }

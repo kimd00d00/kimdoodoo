@@ -58,5 +58,36 @@ public class FoodModel {
 		//어떤 JSP로 보낼지 설정한다
 		return "../main/main.jsp";
 	}
+	@RequestMapping("food/food_find.do")
+	public String food_find(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		}catch(Exception ex) {}
+		String page = request.getParameter("page");
+		if(page==null)
+			page = "1";
+		String addr = request.getParameter("addr");
+		if(addr==null)
+			addr="강남";
+		int curPage = Integer.parseInt(page);
+		int rowSize = 12;
+		int start = (rowSize*curPage)-(rowSize-1);
+		int end = rowSize*curPage;
+		
+		Map map = new HashMap();
+		map.put("address", addr);
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<FoodVO> list = FoodDAO.foodLocationFindData(map);
+		int totalPage = FoodDAO.foodLocationFindTotalPage(addr);
+		System.out.println(totalPage);
+		request.setAttribute("curPage", curPage);
+		request.setAttribute("list", list);
+		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("addr", addr);
+		request.setAttribute("main_jsp", "../food/food_find.jsp");
+		return "../main/main.jsp";
+	}
 	
 }
