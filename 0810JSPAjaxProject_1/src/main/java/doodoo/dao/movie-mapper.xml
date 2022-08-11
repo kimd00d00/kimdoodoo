@@ -15,4 +15,16 @@
 		SELECT mno, cno, title, grade, reserve, genre, time, regdate, director, actor, showuser, poster, key, score
 		FROM project_movie WHERE mno=#{mno}
 	</select>
+	<select id="movieFindData" resultType="MovieVO" parameterType="String">
+		SELECT mno, title, poster, rownum
+		FROM project_movie
+		WHERE rownum&lt;=12 
+		AND title LIKE '%'||#{title}||'%' 
+	</select>
+	<!-- xml에서 꺽쇠 넣으면 오류남. -->
+	<select id="movieSearchData" resultType="MovieVO">
+		SELECT mno, title, poster, genre, director
+		FROM project_movie
+		ORDER BY mno ASC
+	</select>
 </mapper>

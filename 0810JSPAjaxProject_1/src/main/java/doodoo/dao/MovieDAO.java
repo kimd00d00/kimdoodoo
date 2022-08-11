@@ -40,4 +40,21 @@ public class MovieDAO {
 		session.close();
 		return total;
 	}
+	public static List<MovieVO> movieFindData(String title){
+		SqlSession session = ssf.openSession();
+		List<MovieVO> list = session.selectList("movieFindData", title);
+		session.close();
+		return list;
+	}
+	public static List<MovieVO> movieSearchData(){
+		SqlSession session = ssf.openSession();
+		List<MovieVO> list = null;
+		try {
+			list = session.selectList("movieSearchData");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		session.close();
+		return list;
+	}
 }

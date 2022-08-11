@@ -18,6 +18,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/sist/mapper/movie-mapper.xml"/>
+		<mapper resource="doodoo/dao/movie-mapper.xml"/>
 	</mappers>
 </configuration>
