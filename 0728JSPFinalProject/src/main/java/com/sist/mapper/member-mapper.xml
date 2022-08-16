@@ -33,12 +33,25 @@
 		FROM project_member
 		WHERE id=#{id}
 	</select>
-	<!-- 회원 수정 -->
-	
+	<!-- 회원 수정-회원 정보 읽기 -->
+	<select id="memberDetailData" resultType="MemberVO" parameterType="String">
+		SELECT * FROM project_member
+		WHERE id=#{id}
+	</select>
+	<!-- 회원 수정 - UPDATE -->
+	<update id="memberUpdate" parameterType="MemberVO"> 
+		UPDATE project_member SET
+		name=#{name}, sex=#{sex}, email=#{email}, addr1=#{addr1}, addr2=#{addr2},
+		tel=#{tel}, content=#{content}
+		WHERE id = #{id}
+	</update>
 	<!-- 아이디 찾기(이메일, 전화번호 이용) -->
 	
 	<!-- 비밀번호 찾기(아이디 이용)->임시비밀번호 메일로 보낼지도? -->
 	
 	<!-- 회원 탈퇴 -->
-	
+	<delete id="memberDelete" parameterType="String">
+		DELETE FROM project_member
+		WHERE id=#{id}
+	</delete>
 </mapper>

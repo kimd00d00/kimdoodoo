@@ -16,12 +16,12 @@
 		WHERE no=#{no}
 	</update>
 	<select id="boardReplyDetailData" resultType="BoardReplyVO" parameterType="int">
-		SELECT no, name, subject, content, hit, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, group_id
+		SELECT no, name, pwd, subject, content, hit, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, group_id, group_step
 		FROM project_replyBoard
 		WHERE no = #{no}
 	</select>
 <!-- 수정, 삭제 -->
-
+	
 <!-- 새 문의글 쓰기 -->
 	<insert id="boardReplyInsert" parameterType="BoardReplyVO">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
@@ -56,4 +56,19 @@
 		isReply = 1
 		WHERE no=#{no}
 	</update>
+	<!-- 수정 -->
+	<update id="boardReplyUpdate" parameterType="BoardReplyVO">
+		UPDATE project_replyboard SET
+		name=#{name}, subject=#{subject}, content=#{content}
+		WHERE no=#{no}
+	</update>
+	<!-- 삭제 -->
+	<select id="boardGetGroupId" resultType="int" parameterType="int">
+		SELECT group_id FROM project_replyboard
+		WHERE no=#{no}
+	</select>
+	<delete id="boardReplyDelete" parameterType="int">
+		DELETE FROM project_replyboard
+		WHERE group_id=#{group_id}
+	</delete>
 </mapper>

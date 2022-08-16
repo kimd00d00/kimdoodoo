@@ -105,4 +105,64 @@ public class MemberDAO {
 		}
 		return vo;
 	}
+	//회원수정시 회원상세정보 가져오기
+	public static MemberVO memberDetailData(String id) {
+		MemberVO vo = new MemberVO();
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			vo = session.selectOne("memberDetailData",id);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return vo;
+	}
+	//회원수정시 비밀번호 확인 후 업데이트
+	public static boolean memberUpdate(MemberVO vo) {
+		boolean bCheck = false;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			MemberVO pvo = session.selectOne("memberDetailData", vo.getId()); 
+			if(pvo.getPwd().equals(vo.getPwd())) {
+				bCheck = true;
+				session.update("memberUpdate",vo);
+				session.commit();
+			}else {
+				bCheck = false;
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return bCheck;
+	}
+	
+	//회원탈퇴
+	public static boolean memberDelete(String id, String pwd) {
+		boolean bCheck = false;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			MemberVO pvo = session.selectOne("memberInfoData", id); 
+			if(pvo.getPwd().equals(pwd)) {
+				bCheck = true;
+				session.delete("memberDelete", id);
+				session.commit();
+			}else {
+				bCheck = false;
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return bCheck;
+	}
 }

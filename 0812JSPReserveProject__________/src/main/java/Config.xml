@@ -15,6 +15,6 @@
       </environment>
    </environments>
    <mappers>
-     <mapper resource="doodoo/dao/food-mapper.xml"/>
+     <mapper resource="doodoo/dao/reserve-mapper.xml"/>
    </mappers>
  </configuration>

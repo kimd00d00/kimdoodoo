@@ -32,15 +32,15 @@
         <ul>
           <li><a href="#">개인정보</a>
             <ul>
-              <li><a href="#">회원 수정</a></li>
-              <li><a href="#">회원 탈퇴</a></li>
+              <li><a href="../member/join_update.do">회원 수정</a></li>
+              <li><a href="../member/join_delete.do">회원 탈퇴</a></li>
             </ul>
           </li>
           <li><a href="#">게시판 활동내역</a></li>
           <li><a href="#">예매 내역</a></li>
           <li><a href="#">장바구니</a></li>
           <li><a href="#">구매 내역</a></li>
-          <li><a href="#">찜 내역</a></li>
+          <li><a href="../food/jjim_list.do">찜 내역</a></li>
           
         </ul>
       </nav>
@@ -49,7 +49,7 @@
     <!-- ################################################################################################ --> 
     <!-- ################################################################################################ -->
     <div class="content three_quarter"> 
-      
+    	<jsp:include page="${mypage_jsp }"/>
     </div>
     <!-- / main body -->
     <div class="clear"></div>

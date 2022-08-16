@@ -8,6 +8,7 @@ import java.util.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sist.dao.*;
 import com.sist.vo.*;
@@ -55,9 +56,34 @@ public class FoodModel {
 		//request에 담아서 넘겨 준다.
 		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp","../food/food_detail.jsp");
+		
+		//찜하기와 관련된 영역
+		JjimVO jvo = new JjimVO();
+		jvo.setFno(Integer.parseInt(fno));
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		jvo.setId(id);
+		int jcount = FoodDAO.foodJjimCount(jvo);
+		int lcount = 0;
+		request.setAttribute("fno", Integer.parseInt(fno));
+		request.setAttribute("jcount", jcount);
+		
 		//어떤 JSP로 보낼지 설정한다
 		return "../main/main.jsp";
 	}
+	
+	@RequestMapping("food/jjim.do")
+	public String food_jjim(HttpServletRequest request, HttpServletResponse response) {
+		String fno = request.getParameter("fno");
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		JjimVO vo = new JjimVO();
+		vo.setFno(Integer.parseInt(fno));
+		vo.setId(id);
+		FoodDAO.foodJjimInsert(vo);
+		return "redirect:../food/food_detail.do?fno="+fno;
+	}
+	
 	@RequestMapping("food/food_find.do")
 	public String food_find(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -90,4 +116,32 @@ public class FoodModel {
 		return "../main/main.jsp";
 	}
 	
+	@RequestMapping("food/jjim_list.do")
+	public String food_jjim_list(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		List<Integer> list = FoodDAO.foodJjimGetFno(id);
+		List<FoodVO> fList = new ArrayList<FoodVO>();
+		for(int fno:list) {
+			FoodVO vo = FoodDAO.foodJjimListData(fno);
+			fList.add(vo);
+		}
+		request.setAttribute("fList", fList);
+		request.setAttribute("mypage_jsp", "../mypage/jjim_list.jsp");
+		request.setAttribute("main_jsp", "../mypage/mypage.jsp");
+		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("food/jjim_cancel.do")
+	public String food_jjim_cancel(HttpServletRequest request, HttpServletResponse response) {
+		String fno = request.getParameter("fno");
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		JjimVO vo = new JjimVO();
+		vo.setId(id);
+		vo.setFno(Integer.parseInt(fno));
+		//DB연동!
+		FoodDAO.foodJjimDelete(vo);
+		return "redirect:../food/jjim_list.do";
+	}
 }
