@@ -6,8 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.sist.vo.FoodCategoryVO;
-import com.sist.vo.FoodVO;
+import com.sist.vo.*;
 
 import java.io.*;
 
@@ -112,5 +111,78 @@ public class FoodDAO {
 				session.close();
 		}
 		return total;
+	}
+	
+	public static int foodJjimCount(JjimVO vo) {
+		int count = 0;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			count = session.selectOne("foodJjimCount",vo);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return count;
+	}
+	
+	public static void foodJjimInsert(JjimVO vo) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			session.insert("foodJjimInsert",vo);
+			session.commit();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	public static FoodVO foodJjimListData(int fno){
+		FoodVO vo = null;
+		SqlSession session = ssf.openSession();
+		try {
+			session = ssf.openSession();
+			vo = session.selectOne("foodJjimListData",fno);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return vo;
+	}
+	
+	public static List<Integer> foodJjimGetFno(String id) {
+		List<Integer> list = null;
+		SqlSession session = ssf.openSession();
+		try {
+			session = ssf.openSession();
+			list = session.selectList("foodJjimGetFno",id);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
+	
+	public static void foodJjimDelete(JjimVO vo) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			session.insert("foodJjimDelete",vo);
+			session.commit();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
 	}
 }

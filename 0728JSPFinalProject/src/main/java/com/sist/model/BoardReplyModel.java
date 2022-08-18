@@ -66,4 +66,52 @@ public class BoardReplyModel {
 		//데이터 전송은 없고, 처리 후 이전에 실행된 화면으로 이동시킨다.
 	}
 	
+	@RequestMapping("board_reply/detail.do")
+	public String board_reply_detail(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		BoardReplyVO vo = BoardReplyDAO.boardReplyDetailData(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../board_reply/detail.jsp");
+		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("board_reply/update.do")
+	public String board_reply_update(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		BoardReplyVO vo = BoardReplyDAO.boardReplyUpdateData(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../board_reply/update.jsp");
+		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("board_reply/update_ok.do")
+	public String board_reply_update_ok(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		String name= request.getParameter("name");
+		String subject = request.getParameter("subject");
+		String content = request.getParameter("content");
+		String pwd = request.getParameter("pwd");
+		String no = request.getParameter("no");
+		
+		BoardReplyVO vo = new BoardReplyVO();
+		vo.setName(name);
+		vo.setSubject(subject);
+		vo.setContent(content);
+		vo.setPwd(pwd);
+		vo.setNo(Integer.parseInt(no));
+		
+		BoardReplyDAO.boardReplyUpdate(vo);
+		return "redirect:../board_reply/detail.do?no="+vo.getNo();
+	}
+	
+	@RequestMapping("board_reply/delete.do")
+	public String board_reply_delete(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		BoardReplyDAO.boardDelete(Integer.parseInt(no));
+		return "redirect:../board_reply/list.do";
+	}
 }

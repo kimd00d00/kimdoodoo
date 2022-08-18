@@ -62,6 +62,25 @@
 							</td>
 						</tr>
 						</c:if>
+						<tr>
+							<td colspan="2" class="text-right">
+								<c:if test="${sessionScope.id!=null }">
+									<%-- <c:if test=${lcount==0 }>
+										<a href="#" class="btn btn-sm btn-danger">조아요</a>
+									</c:if>
+									<c:if test=${lcount!=0 }> <!-- 이미 좋아요 한 건 클릭할 수 없도록 -->
+										<span class="btn btn-sm btn-default">조아요</span>
+									</c:if> --%>
+									<c:if test="${jcount==0 }">
+										<a href="../food/jjim.do?fno=${fno }" class="btn btn-sm btn-info">찜하기</a>
+									</c:if>
+									<c:if test="${jcount!=0 }"> <!-- 이미 찜하기 한 건 클릭할 수 없도록 -->
+										<span class="btn btn-sm btn-default">찜하기</span>
+									</c:if>
+								</c:if>
+								<a href="javascript:history.back()" class="btn btn-sm btn-success">목록</a>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<div class="one_quarter">

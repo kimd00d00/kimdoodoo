@@ -10,16 +10,13 @@
 <body>
 <div class="wrapper row3">
   <div id="breadcrumb" class="clear"> 
-    <!-- ################################################################################################ -->
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">커뮤니티</a></li>
       <li><a href="#">묻고 답하기</a></li>
     </ul>
-    <!-- ################################################################################################ --> 
   </div>
 </div>
-<!-- ################################################################################################ --> 
 <div class="wrapper row3">
   <main class="container clear">
   	<h2 class="sectiontitle">묻고 답하기</h2> 
@@ -44,7 +41,6 @@
      		  <td width="10%" class="text-center">${vo.no }</td>
      		  <td width="45%">
      		  	<c:if test="${vo.group_tab==1 }">
-     		  		&nbsp;&nbsp;
      		  		<img src="../board_reply/re_icon.gif">
      		  	</c:if>
      		  <a href="../board_reply/detail.do?no=${vo.no }">${vo.subject }</a></td>

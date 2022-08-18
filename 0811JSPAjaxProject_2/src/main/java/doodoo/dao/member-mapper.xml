@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="doodoo.dao.member-mapper">
+	<select id="memberNameCount" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM project_member
+		WHERE name=#{name}
+	</select>
+	<select id="memberGetEmail" resultType="String" parameterType="String">
+		SELECT email FROM project_member
+		WHERE name=#{name}
+	</select>
+	<select id="emailIdFind" resultType="String" parameterType="hashmap">
+		SELECT RPAD(SUBSTR(id,1,1),LENGTH(id),'*') FROM project_member
+		WHERE name=#{name} AND email=#{email}
+	</select>
+	<select id="memberGetTel" resultType="String" parameterType="String">
+		SELECT tel FROM project_member
+		WHERE name=#{name}
+	</select>
+	<select id="telIdFind" resultType="String" parameterType="hashmap">
+		SELECT RPAD(SUBSTR(id,1,1),LENGTH(id),'*') FROM project_member
+		WHERE name=#{name} AND tel=#{tel}
+	</select>
+</mapper>

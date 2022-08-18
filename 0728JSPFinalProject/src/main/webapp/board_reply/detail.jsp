@@ -24,33 +24,6 @@ $(function(){
 	})
 	let x = $('ul').html();
 	console.log(x);
-	/*삭제처리
-	let btn=document.querySelector("delBtn") 이거랑 같음
-	=> 태그명($(태그명)), 아이디명($(#아이디명)), 클래스명($(.클래스명))
-	=> 인접 ($(태그명 + 태그명)), 후손($(태그명 태그명)), 자손 ($(태그명>태그명))
-	이벤트는 onclick / onmouseover / hover / onchange / onkeydown / onkeyup
-	onclick
-	 $("tagName").click(function(){
-		 처리내용
-	 })
-	 $("tagName").on("click",function(){
-		 처리내용
-	 })
-	 hover
-	  $("tagName").hover(function(){
-		  처리내용
-	  })
-	  onchange : select태그에서 많이 나온다.
-	  선택한 옵션이 바뀌었을 때... 
-	   <select> -> 예약에서 나옴...
-	  	 $('tagName').change(function(){
-	  		 처리내용~
-	  	 })
-	   </select>
-	 onkeydown(채팅), onkeyup(서치바)
-	 down : 이벤트 발생 후 값이 입력됨
-	 up : 값이 입력된 후 이벤트가 발생
-	*/
 	$('#delBtn').click(function(){
 		let pwd=$('#delPwd').val();
 		let no=$(this).attr("data-no");
@@ -58,20 +31,6 @@ $(function(){
 			$('#delPwd').focus();
 			return;
 		}
-		// ajax로 요청&데이터 받기
-		//alert("password:"+pwd+"\n번호"+no); 데이터 잘 가져오는지 확인
-		/*
-		type : GET/POST 방식 결정
-		url : 처리할 URL 주소 (.do)
-		data : ?() 어떤 데이터를 처리할 건지
-		success/error :  정상수행/에러발생했을때 어떻게 할건지
-		 success:function(result){},
-		 error:function(ex){}
-		 
-		 HttpRequest request ; 브라우저에 존재하는 request
-		 request.open("post","../freeboard/delete.do",true) //true:비동기적으로 넘어간다./false:동기적으로 넘어감
-		 
-		*/
 		$.ajax({
 			type:'post',
 			url:'../freeboard/delete.do', 
@@ -111,19 +70,16 @@ $(function(){
 <body>
 <div class="wrapper row3">
   <div id="breadcrumb" class="clear"> 
-    <!-- ################################################################################################ -->
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">커뮤니티</a></li>
-      <li><a href="#">자유게시판</a></li>
+      <li><a href="#">묻고 답하기</a></li>
     </ul>
-    <!-- ################################################################################################ --> 
   </div>
 </div>
-<!-- ################################################################################################ --> 
 <div class="wrapper row3">
   <main class="container clear">
-  	<h2 class="sectiontitle">글쓰기</h2> 
+  	<h2 class="sectiontitle">상세보기</h2> 
      <div class="two_third first">
      	<table class="table">
      		<tr>
@@ -149,9 +105,11 @@ $(function(){
      		</tr>
      		<tr>
      			<td colspan="4" class="text-right">
-     				<a href="../freeboard/update.do?no=${vo.no }" class="btn btn-xs btn-danger">수정</a>
-     				<span id="del" class="btn btn-xs btn-warning">삭제</span>
-     				<a href="../freeboard/list.do" class="btn btn-xs btn-info">목록</a>
+     				<c:if test="${vo.group_step!=1 }"> <!-- 관리자가 작성=1, 사용자가 작성=0 -->
+     				<a href="../board_reply/update.do?no=${vo.no }" class="btn btn-xs btn-danger">수정</a>
+     				<a id="del" href="../board_reply/delete.do?no=${vo.no }" class="btn btn-xs btn-warning">삭제</a>
+     				</c:if>
+     				<a href="../board_reply/list.do" class="btn btn-xs btn-info">목록</a>
      			</td>
      		</tr>
      		<tr id="delTr" style="display:none">
@@ -161,57 +119,6 @@ $(function(){
      			</td>
      		</tr>
      	</table>
-     	<div id="comments">
-        <h2>댓글</h2>
-        <ul>
-          <c:forEach var="rvo" items="${list }">
-	          <li>
-	            <article>
-	              <header>
-	                <figure class="avatar">
-	                	<c:if test="${sessionScope.id==rvo.id }"> <!-- 본인만 댓글 수정삭제 가능 -->
-	                	  <span class="btn btn-xs btn-danger up" style="color:black" data-no="${rvo.no }">수정</span>
-	                	  <a href="../reply/reply_delete.do?no=${rvo.no }&bno=${vo.no}" class="btn btn-xs btn-success" style="color:black">삭제</a>
-	                	</c:if>
-	                </figure>
-	                <address>
-	                By <a href="#">${rvo.name }&nbsp;(${rvo.dbday })</a>
-	                </address>
-	              </header>
-	              <div class="comcont">
-	                <p><pre style="white-space:pre-wrap; background-color:white; border:none;">${rvo.msg }</pre></p>
-	              </div>
-	            </article>
-	          </li>
-	          	 <div style="display:none" id="update${rvo.no }" class="updates">
-	             <table class="table">
-        			<tr><td>
-	        			<form method=post action="../reply/reply_insert.do">
-	        			  <input type=hidden name=bno value="${vo.no }">
-	        			  <input type=hidden name=type value="1">
-	        			  <input type=hidden name=no value="${rvo.no }">
-	        			  <textarea rows="5" cols="70" name="msg" style="float:left">${rvo.msg }</textarea>
-	        			  <input type="submit" class="btn btn-sm btn-primary" style="height:50px;height:100%" value="댓글 수정">
-	        			</form>
-        			</td></tr>
-        		</table>
-        		</div>
-	      </c:forEach>
-        </ul>
-      </div>
-      <c:if test="${sessionScope.id!=null }">
-        <table class="table">
-        	<tr><td>
-        			<form method=post action="../reply/reply_insert.do">
-        			  <input type=hidden name=bno value="${vo.no }">
-        			  <input type=hidden name=type value="1">
-        			  <textarea rows="5" cols="70" name="msg" style="float:left"></textarea>
-        			  <input type="submit" class="btn btn-sm btn-primary" style="height:105px" value="댓글 쓰기">
-        			</form>
-        	</td></tr>
-        </table>
-      </c:if>
-     </div>
      <div class="one_third">2/3</div>
   </main>
 </div>

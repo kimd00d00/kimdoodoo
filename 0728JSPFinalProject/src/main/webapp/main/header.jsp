@@ -34,27 +34,21 @@
   <nav id="mainav" class="clear"> 
     <ul class="clear">
       <li class="active"><a href="../main/main.do">Home</a></li>
-      <li><a class="drop" href="#">회원</a>
       	<c:if test="${sessionScope.id==null }">
+      		<li><a class="drop" href="#">회원</a>
 	        <ul>
 	          <li><a href="../member/join.do">회원가입</a></li>
 	          <li><a href="../pages/full-width.html">아이디찾기</a></li>
 	          <li><a href="../pages/sidebar-left.html">비밀번호 찾기</a></li>
 	        </ul>
+	        </li>
         </c:if>
-        <c:if test="${sessionScope.id!=null }">
-	        <ul>
-	          <li><a href="../member/join.do">회원수정</a></li>
-	          <li><a href="../pages/full-width.html">회원탈퇴</a></li>
-	        </ul>
-        </c:if>
-      </li>
       <li><a class="drop" href="#">맛집</a>
         <ul>
           <li><a href="../food/food_find.do">지역별 맛집 찾기</a></li>
           <c:if test="${sessionScope.id!=null }">
           	<li><a href="../food/food_find.do">맛집 추천</a></li>
-          	<li><a href="../pages/sidebar-left.html">맛집 예약</a></li>
+          	<li><a href="../reserve/reserve.do">맛집 예약</a></li>
           </c:if>
         </ul>
       </li>

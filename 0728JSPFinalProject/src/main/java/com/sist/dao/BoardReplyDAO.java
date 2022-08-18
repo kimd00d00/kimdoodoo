@@ -89,6 +89,8 @@ public class BoardReplyDAO {
 		 BoardReplyVO vo = null;
 		 try {
 			 session = ssf.openSession();
+			 session.update("boardReplyHitIncrement",no);
+			 session.commit();
 			 vo = session.selectOne("boardReplyDetailData",no);
 		 }catch(Exception ex) {
 			 
@@ -110,6 +112,49 @@ public class BoardReplyDAO {
 			 session.commit();
 		 }catch(Exception ex) {
 			 session.rollback();
+			 ex.printStackTrace();
+		 }finally {
+			 if(session!=null)
+				 session.close();
+		 }
+	 }
+	 
+	 public static BoardReplyVO boardReplyUpdateData(int no){
+		 SqlSession session = null;
+		 BoardReplyVO vo = null;
+		 try {
+			 session = ssf.openSession();
+			 vo = session.selectOne("boardReplyDetailData",no);
+		 }catch(Exception ex) {
+			 
+		 }finally {
+			 if(session!=null)
+				 session.close();
+		 }
+		 return vo;
+	 }
+	 
+	 public static void boardReplyUpdate(BoardReplyVO vo) {
+		 SqlSession session = null;
+		 try {
+			 session = ssf.openSession();
+			 session.update("boardReplyUpdate",vo);
+			 session.commit();
+		 }catch(Exception ex) {
+			 ex.printStackTrace();
+		 }finally {
+			 if(session!=null)
+				 session.close();
+		 }
+	 }
+	 
+	 public static void boardDelete(int no) {
+		 SqlSession session = null;
+		 try {
+			 session = ssf.openSession(true);
+			 int gi = session.selectOne("boardGetGroupId",no);
+			 session.delete("boardReplyDelete",gi);
+		 }catch(Exception ex) {
 			 ex.printStackTrace();
 		 }finally {
 			 if(session!=null)
