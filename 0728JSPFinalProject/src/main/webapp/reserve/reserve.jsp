@@ -109,7 +109,13 @@ $(function(){
 										</tr>
 										<tr id="reserveBtn">
 											<td colspan="2" class="text-center">
+												<form method="post" action="../reserve/reserve_ok.do">
+													<input type="hidden" name="fno" id="re_fno" >
+													<input type="hidden" name="rday" id="re_rday" >
+													<input type="hidden" name="rtime" id="re_rtime" >
+													<input type="hidden" name="capa" id="re_capa" >
 												<button class="btn btn-sm btn-danger" >예약하기</button>
+												</form>
 											</td>
 										</tr>
 									</table>

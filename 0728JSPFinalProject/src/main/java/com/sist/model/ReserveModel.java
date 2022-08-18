@@ -2,6 +2,7 @@ package com.sist.model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.Controller;
 import controller.RequestMapping;
@@ -92,6 +93,33 @@ public class ReserveModel {
 	public static String reserve_capa(HttpServletRequest request, HttpServletResponse response) {
 		
 		return "../reserve/reserve_capa.jsp";
+	}
+	
+	@RequestMapping("reserve/reserve_ok.do")
+	public static String reserve_ok(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			//한글 변환
+			request.setCharacterEncoding("UTF-8");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		//식당번호, 예약날짜, 예약시간, 인원수
+		String fno = request.getParameter("fno");
+		String rday = request.getParameter("rday");
+		String rtime = request.getParameter("rtime");
+		String capa = request.getParameter("capa");
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		
+		return "redirect:../mypage/mypage_reserve.do";
+	}
+	
+	@RequestMapping("mypage/mypage_reserve.do")
+	public static String mypage_reserve(HttpServletRequest request, HttpServletResponse response) {
+		
+		return "../main/main.jsp";
 	}
 	
 }

@@ -22,6 +22,8 @@ $(function(){
 		$('#f_name_label').show();
 		$('#f_name').text(name);
 		$('#rImg').attr("src",poster);
+		//form태그 데이터 입력
+		$('#re_fno').val(fno);
 		//달력 전송
 		$.ajax({
 			type:'post',

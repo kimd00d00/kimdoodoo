@@ -13,6 +13,7 @@ $(function(){
 		let capa = $(this).text();
 		$('#capa_label').show();
 		$('#capa_result').text(capa);
+		$('#re_capa').val(capa);
 		$('#reserveBtn').show();
 	})
 })

@@ -14,10 +14,10 @@ $(function(){
 		let year = $(this).attr("data-year");
 		let month = $(this).attr("data-month");
 		let day=$(this).text();
-		let days=year+"."+month+"."+day+".";
+		let days=year+"-"+month+"-"+day;
 		$('#date_label').show();
 		$('#date_result').text(days);
-		
+		$('#re_rday').val(days)
 		$.ajax({
 			type:'post',
 			url:'../reserve/reserve_time.do',
@@ -66,10 +66,10 @@ $(function(){
       		</c:if>
       		<c:choose>
       		<c:when test="${days[i]==1 }">
-	      		<td class="text-center danger" >${i }</td> <%--1 일부터 출력 --%>
+	      		<td class="text-center danger rtds" data-year="${year }" data-month="${month }" style="color:black">${i }</td> <%--1 일부터 출력 --%>
       		</c:when>
       		<c:otherwise>
-      			<td class="text-center rtds" data-year="${year }" data-month="${month }" style="color:black">${i }</td>
+      			<td class="text-center" >${i }</td>
       		</c:otherwise>
       		</c:choose>
       		<c:set var="week" value="${week+1 }"/>

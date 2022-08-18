@@ -13,7 +13,7 @@ $(function(){
 		let time=$(this).text();
 		$('#time_label').show();
 		$('#time_result').text(time);
-		
+		$('#re_rtime').val(time)
 		$.ajax({
 			type:'get',
 			url:'../reserve/reserve_capa.do',
