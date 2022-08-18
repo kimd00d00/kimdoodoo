@@ -32,7 +32,7 @@
 	    <div class="col-md-3">
 	      <div class="thumbnail">
 	        <a href="#">
-	          <img src="${vo.poster }" style="width:100%">
+	          <a href="../food/food_detail_before.do?fno=${vo.fno }"><img src="${vo.poster }" style="width:100%"></a>
 	          <div class="caption">
 	            <p>${vo.name }&nbsp;<span style="color:orange">${vo.score }</span></p>
 	            <p>${vo.type }</p>

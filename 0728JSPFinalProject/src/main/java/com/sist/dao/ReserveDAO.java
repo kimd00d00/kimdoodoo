@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.sist.vo.FoodVO;
+import com.sist.vo.ReserveVO;
 
 import java.io.*;
 
@@ -77,5 +78,88 @@ public class ReserveDAO {
 				session.close();
 		}
 		return realtime;
+	}
+	//예약등록
+	public static void reserveInsert(ReserveVO vo) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.insert("reserveInsert",vo);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	public static List<ReserveVO> reserveMypageData(String id){
+		List<ReserveVO> list = null;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("reserveMypageData",id);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
+	
+	public static List<ReserveVO> reserveAdminpageData(){
+		List<ReserveVO> list = null;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("reserveAdminpageData");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
+	
+	public static void reserveAdminUpdate(int no) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.update("reserveAdminUpdate",no);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	public static void reserveCancel(int no) {
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.delete("reserveCancel",no);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	public static ReserveVO reserveInfo(int no) {
+		SqlSession session = null;
+		ReserveVO vo = new ReserveVO();
+		try {
+			session = ssf.openSession();
+			vo = session.selectOne("reserveInfo",no);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return vo;
 	}
 }

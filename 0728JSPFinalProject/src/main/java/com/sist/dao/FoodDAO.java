@@ -185,4 +185,18 @@ public class FoodDAO {
 				session.close();
 		}
 	}
+	public static List<RecipeVO> foodRecipeMakeData(String type){
+		List<RecipeVO> list = null;
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("foodRecipeMakeData",type);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
 }

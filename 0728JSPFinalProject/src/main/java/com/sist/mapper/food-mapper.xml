@@ -62,4 +62,10 @@
 		DELETE FROM jjim
 		WHERE id=#{id} AND fno=#{fno}
 	</delete>
+	<!--  -->
+	<select id="foodRecipeMakeData" resultType="RecipeVO" parameterType="String">
+		SELECT no, title, poster, chef, rownum
+		FROM recipe
+		WHERE REGEXP_LIKE(title,#{type}) AND rownum &lt;=5
+	</select>
 </mapper>

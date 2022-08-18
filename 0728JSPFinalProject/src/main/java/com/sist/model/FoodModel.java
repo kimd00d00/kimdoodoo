@@ -67,6 +67,13 @@ public class FoodModel {
 		int lcount = 0;
 		request.setAttribute("fno", Integer.parseInt(fno));
 		request.setAttribute("jcount", jcount);
+		request.setAttribute("likecount", 0);
+		
+		//관련 레시피 전송
+		String type=vo.getType();
+		type = type.replace("/", "|").replace(" ", "");
+		List<RecipeVO> rList = FoodDAO.foodRecipeMakeData(type);
+		request.setAttribute("rList", rList);
 		
 		//어떤 JSP로 보낼지 설정한다
 		return "../main/main.jsp";

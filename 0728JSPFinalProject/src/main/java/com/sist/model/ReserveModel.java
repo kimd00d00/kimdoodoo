@@ -95,6 +95,7 @@ public class ReserveModel {
 		return "../reserve/reserve_capa.jsp";
 	}
 	
+	//예약 INSERT 처리
 	@RequestMapping("reserve/reserve_ok.do")
 	public static String reserve_ok(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -112,14 +113,59 @@ public class ReserveModel {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
 		
+		ReserveVO vo = new ReserveVO();
+		vo.setId(id);
+		vo.setFno(Integer.parseInt(fno));
+		vo.setRday(rday);
+		vo.setRtime(rtime);
+		vo.setCapa(capa);
+		
+		ReserveDAO.reserveInsert(vo);
 		
 		return "redirect:../mypage/mypage_reserve.do";
 	}
 	
+	//[유저] 예약목록 조회
 	@RequestMapping("mypage/mypage_reserve.do")
 	public static String mypage_reserve(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		List<ReserveVO> list = ReserveDAO.reserveMypageData(id);
 		
+		request.setAttribute("list", list);
+		request.setAttribute("mypage_jsp", "../mypage/mypage_reserve.jsp");
+		request.setAttribute("main_jsp", "../mypage/mypage.jsp");
 		return "../main/main.jsp";
 	}
-	
+	//[관리자] 예약목록 조회
+	@RequestMapping("adminpage/adminpage_reserve.do")
+	public static String admin_reserve(HttpServletRequest request, HttpServletResponse response) {
+		List<ReserveVO> list = ReserveDAO.reserveAdminpageData();
+		request.setAttribute("list", list);
+		request.setAttribute("admin_jsp","../adminpage/adminpage_reserve.jsp");
+		request.setAttribute("main_jsp", "../adminpage/adminpage.jsp");
+		return "../main/main.jsp";
+	}
+	//[관리자] 예약승인
+	@RequestMapping("adminpage/reserve_ok.do")
+	public static String admin_reserveOk(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		ReserveDAO.reserveAdminUpdate(Integer.parseInt(no));
+		return "redirect:../adminpage/adminpage_reserve.do";
+	}
+	//[유저] 예약취소
+	@RequestMapping("reserve/reserve_cancel.do")
+	public static String reserve_cancel(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		ReserveDAO.reserveCancel(Integer.parseInt(no));
+		return "redirect:../mypage/mypage_reserve.do";
+	}
+	//[유저] 예약식당 정보 조회
+	@RequestMapping("reserve/reserve_info.do")
+	public static String reserve_info(HttpServletRequest request, HttpServletResponse response) {
+		String no = request.getParameter("no");
+		ReserveVO vo = ReserveDAO.reserveInfo(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
+		return "../reserve/reserve_info.jsp";
+	}
 }

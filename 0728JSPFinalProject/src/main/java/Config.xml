@@ -15,6 +15,7 @@
 		<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO"/>
 		<typeAlias type="com.sist.vo.BoardReplyVO" alias="BoardReplyVO"/>
 		<typeAlias type="com.sist.vo.JjimVO" alias="JjimVO"/>
+		<typeAlias type="com.sist.vo.ReserveVO" alias="ReserveVO"/>
 	</typeAliases>
 	<environments default="development"> <!-- 개발환경 만들기 -->
 		<environment id="development">
