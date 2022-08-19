@@ -38,6 +38,9 @@ $(function(){
 	$('#logoutImg').click(function(){
 		location.href="../member/logout.do";
 	})
+	$('#storeImg').click(function(){
+		location.href="../goods_main/goods_main.do";
+	})
 })
 </script>
 </head>

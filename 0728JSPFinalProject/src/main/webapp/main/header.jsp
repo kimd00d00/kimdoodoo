@@ -25,7 +25,7 @@
       <c:if test="${sessionScope.id!=null }">
         <li><img src="../main/images/logout.png" style="width:50px; height:50px" class="images" id="logoutImg" title="로그아웃"></li>
       </c:if>
-        <li><img src="../main/images/store2.png" style="width:100px; height:50px" class="images" id=""></li>
+        <li><img src="../main/images/store2.png" style="width:100px; height:50px" class="images" id="storeImg"></li>
       </ul>
     </div>
   </header>
