@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	<employee>
+		<list>
+			<name></name>
+			<dept></dept>
+			<tel></tel>
+		</list>
+		<list>
+			<name></name>
+			<dept></dept>
+			<phone></phone>
+		</list>
+	</employee>
+ -->
+ <!ELEMENT employee (list+)>
+ <!ELEMENT list (name, dept,(tel|phone))>
+ <!ELEMENT name (#PCDATA)>
+ <!ELEMENT dept (#PCDATA)>
+ <!ELEMENT tel (#PCDATA)>
+ <!ELEMENT phone (#PCDATA)>

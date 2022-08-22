@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.food-mapper">
+	<!-- 맛집 카테고리 읽기 -->
+	<select id="foodCategoryData" resultType="FoodCategoryVO">
+		<!-- List FoodCategoryVO -->
+		SELECT cno, title, subject, poster
+		FROM food_category
+	</select>
+	<!-- 카테고리별 맛집 출력 -->
+	<select id="foodListData" resultType="FoodVO" parameterType="int">
+		SELECT fno, poster, name, tel, type, address, score
+		FROM food_house
+		WHERE cno=#{cno}
+	</select>
+	<select id="foodCategoryInfoData" resultType="FoodCategoryVO" parameterType="int">
+		SELECT title, subject
+		FROM food_category
+		WHERE cno=#{cno}
+	</select>
+	<!-- 상세 보기 -->
+	<select id="foodDetailData" resultType="FoodVO" parameterType="int">
+		SELECT *
+		FROM food_house
+		WHERE fno=${fno}
+	</select>
+	<!-- 검색/지역별 맛집 찾기 -->
+	<select id="foodLocationFindData" resultType="FoodVO" parameterType="hashmap">
+		SELECT fno, name, score, poster, type, address, num
+		FROM (SELECT fno, name, score, poster, type, address, rownum as num
+		FROM (SELECT fno, name, score, poster, type, address
+		FROM food_location WHERE address LIKE '%'||#{address}||'%' ORDER BY fno ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="foodLocationFindTotalPage" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/12.0) FROM food_location
+		WHERE address LIKE '%'||#{address}||'%'
+	</select>
+	<!-- 찜하기 -->
+	<insert id="foodJjimInsert" parameterType="JjimVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM jjim
+		</selectKey>
+		INSERT INTO jjim VALUES(#{no},#{id},#{fno})
+	</insert>
+	<!-- 찜하기 이미 했는지 확인 -->
+	<select id="foodJjimCount" resultType="int" parameterType="JjimVO">
+		SELECT COUNT(*) FROM jjim
+		WHERE fno=#{fno} AND id=#{id}
+	</select>
+	<!-- 찜 출력(마이페이지) : forEach -->
+	<select id="foodJjimListData" resultType="FoodVO" parameterType="int">
+		SELECT * FROM food_house
+		WHERE fno=#{fno} 
+	</select>
+	<select id="foodJjimGetFno" resultType="int" parameterType="String">
+		SELECT fno FROM jjim
+		WHERE id = #{id}
+	</select>
+	<!-- 찜 취소 -->
+	<delete id="foodJjimDelete" parameterType="JjimVO">
+		DELETE FROM jjim
+		WHERE id=#{id} AND fno=#{fno}
+	</delete>
+	<!--  -->
+	<select id="foodRecipeMakeData" resultType="RecipeVO" parameterType="String">
+		SELECT no, title, poster, chef, rownum
+		FROM recipe
+		WHERE REGEXP_LIKE(title,#{type}) AND rownum &lt;=5
+	</select>
+</mapper>

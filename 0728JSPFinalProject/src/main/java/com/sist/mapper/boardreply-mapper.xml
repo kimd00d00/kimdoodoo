@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.boardreply-mapper">
+<!-- 목록 가지고 오기 -->
+	<select id="boardReplyListData" resultType="BoardReplyVO" parameterType="hashmap">
+		SELECT no, subject, name, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, hit, isreply, group_id, group_tab, num
+		FROM (SELECT no, subject, name, regdate, hit, isreply, group_id, group_tab, rownum as num
+			FROM (SELECT no, subject, name, regdate, hit, isreply, group_id, group_tab
+				FROM project_replyboard ORDER BY group_id DESC, group_step ASC ))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+<!-- 상세 보기(일반 유저와 어드민 동일) -->
+	<update id="boardReplyHitIncrement" parameterType="int">
+		UPDATE project_replyBoard SET
+		hit = hit+1
+		WHERE no=#{no}
+	</update>
+	<select id="boardReplyDetailData" resultType="BoardReplyVO" parameterType="int">
+		SELECT no, name, pwd, subject, content, hit, TO_CHAR(regdate,'YYYY-MM-DD') as dbday, group_id, group_step
+		FROM project_replyBoard
+		WHERE no = #{no}
+	</select>
+<!-- 수정, 삭제 -->
+	
+<!-- 새 문의글 쓰기 -->
+	<insert id="boardReplyInsert" parameterType="BoardReplyVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM project_replyboard
+		</selectKey>
+		INSERT INTO project_replyboard(no,name,subject,content,pwd,group_id)
+		VALUES(#{no},#{name},#{subject},#{content},#{pwd},(SELECT NVL(MAX(group_id)+1,1) as group_id FROM project_replyboard))
+	</insert>
+	<select id="boardReplyTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/10.0) FROM project_replyBoard
+	</select>
+
+<!-- 답변 달기 -->
+	<select id="boardReplyAdminData" resultType="BoardReplyVO">
+		SELECT * FROM project_replyBoard
+		WHERE isReply!=1 AND group_step!=1
+		ORDER BY no DESC
+	</select>
+	<select id="boardReplyInfoData" resultType="int" parameterType="int">
+		SELECT group_id FROM project_replyBoard
+		WHERE no=#{no}
+	</select>
+	<insert id="boardReplyInsertOk" parameterType="BoardReplyVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM project_replyboard
+		</selectKey>
+		INSERT INTO project_replyboard(no,name,subject,content,pwd,group_id, group_step, group_tab)
+		VALUES(#{no},#{name},#{subject},#{content},#{pwd},#{group_id},1,1)
+	</insert>
+	<update id="boardReplyIsReply" parameterType="int">
+		UPDATE project_replyBoard SET
+		isReply = 1
+		WHERE no=#{no}
+	</update>
+	<!-- 수정 -->
+	<update id="boardReplyUpdate" parameterType="BoardReplyVO">
+		UPDATE project_replyboard SET
+		name=#{name}, subject=#{subject}, content=#{content}
+		WHERE no=#{no}
+	</update>
+	<!-- 삭제 -->
+	<select id="boardGetGroupId" resultType="int" parameterType="int">
+		SELECT group_id FROM project_replyboard
+		WHERE no=#{no}
+	</select>
+	<delete id="boardReplyDelete" parameterType="int">
+		DELETE FROM project_replyboard
+		WHERE group_id=#{group_id}
+	</delete>
+</mapper>

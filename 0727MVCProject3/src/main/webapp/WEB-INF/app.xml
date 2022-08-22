@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	XML : 문서형 데이터베이스
+	왜 쓰는가? -> 모든 언어와 호환된다.
+	어디에 주로 쓰이는가? -> 설정 파일(클래스 등록, 서버 설정 등)
+ -->
+<beans> <!-- 최상위 태그 ~= 데이터베이스에서 테이블-->
+	<bean id="list" class="model.ListModel"/> <!-- COLUMN(id, class) 2개, ROW 하나-->
+	<bean id="insert" class="model.InsertModel"/>
+	<bean id="update" class="model.UpdateModel"/>
+	<bean id="delete" class="model.DeleteModel"/>
+	<bean id="find" class="model.FindModel"/>
+</beans>
